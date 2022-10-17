@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,13 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
- * @property string $name
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $middle_name
+ * @property string $pseudonym
+ * @property string $password
+ *
+ * @property Collection|HasMany $books
  */
 class User extends Authenticatable
 {

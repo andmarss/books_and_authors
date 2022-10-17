@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property string $title
- * @property string $description
+ * @property string|null $description
+ * @property string|null $text
  * @property int $category_id
  * @property int $author_id
- * @property string $image
+ * @property string|null $image
  * @property string $status
  *
  * @property bool $is_in_progress
@@ -44,6 +45,7 @@ class Book extends Model
         'author_id',
         'category_id',
         'description',
+        'text',
         'image',
         'status'
     ];
