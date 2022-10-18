@@ -16,22 +16,35 @@ class BookFactory extends Factory
      */
     public function definition()
     {
-        /** @var int $book_id */
-        $book_id = (Book::query()->latest('id')->first()->id ?? 0) + 1;
+        if (User::query()->count() === 0) {
+            throw new \Exception('Перед созданием книги необходимо создать хотя бы одного пользователя');
+        }
+
+        /** @var BookCategory $category */
+        $category = BookCategory::query()->inRandomOrder()->first();
+
+        /** @var int $author_id */
+        $author_id = User::query()->inRandomOrder()->value('id');
         /** @var string $filepath */
-        $filepath = public_path(sprintf('images/covers/%d', $book_id));
+        $filepath = public_path(sprintf('images/covers/%s', $author_id));
 
         if (!is_dir($filepath)) {
             mkdir($filepath, 0755, true);
+        }
+        /** @var string|bool $image */
+        $image = $this->faker->image($filepath, 640, 480, $category->name, false);
+
+        if (!$image) {
+            throw new \Exception('Image not generated');
         }
 
         return [
             'title'       => $this->faker->title,
             'description' => $this->faker->text(100),
             'text'        => $this->faker->text(rand(500, 1000)),
-            'image'       => $this->faker->image($filepath, 640, 480, null, false),
-            'author_id'   => User::factory(),
-            'category_id' => BookCategory::query()->inRandomOrder()->value('id'),
+            'image'       => $image,
+            'author_id'   => $author_id,
+            'category_id' => $category->id,
             'status'      => $this->faker->randomElement([
                 Book::STATUS_IN_PROGRESS,
                 Book::STATUS_FINISHED,
