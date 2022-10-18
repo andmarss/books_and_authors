@@ -13,6 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        if ($this->command->confirm('Очистить базу данных перед заполнением?')) {
+            $this->command->call('migrate:fresh');
+            $this->command->warn('База данных очищена');
+        }
+
+        $this->call([
+            UserTableSeeder::class,
+            BookTableSeeder::class,
+        ]);
     }
 }

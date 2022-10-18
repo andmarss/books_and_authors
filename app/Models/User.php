@@ -74,4 +74,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Book::class, 'author_id', 'id');
     }
+
+    /**
+     * @return \Database\Factories\UserFactory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
 }
