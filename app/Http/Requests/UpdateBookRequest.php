@@ -34,8 +34,7 @@ class UpdateBookRequest extends FormRequest
                 \App\Models\Book::STATUS_FINISHED,
                 \App\Models\Book::STATUS_CANCELLED
             ),
-            'category_id' => 'required|exists:book_categories,id',
-            'author_id'   => 'required|exists:users,id'
+            'category_id' => 'required|exists:book_categories,id'
         ];
     }
 

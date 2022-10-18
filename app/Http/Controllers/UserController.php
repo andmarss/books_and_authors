@@ -36,7 +36,8 @@ class UserController extends Controller
          */
         $users = $query->with(['books'])
             ->forPage($request->input('page', 1), $request->input('per_page', 10))
-            ->orderBy('updated_at', 'desc')
+            ->withCount('books')
+            ->orderBy('books_count', 'desc')
             ->get();
 
         return UserResource::collection($users)->response($request);
