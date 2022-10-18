@@ -53,7 +53,7 @@ class BookTableSeeder extends Seeder
 
         /** @var User $user */
         foreach (User::query()->cursor() as $user) {
-            Book::factory()->count(rand(1, 15))->create([
+            Book::factory()->count(rand(env('BOOK_SEEDER_AMOUNT_MIN', 1), env('BOOK_SEEDER_AMOUNT_MAX', 5)))->create([
                 'author_id' => $user->id,
             ]);
         }
