@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
         $this->command->info('Загрузка пользователей...');
         User::query()->truncate();
 
-        User::factory()->count(50)->create();
+        User::factory()->count(env('USER_SEEDER_AMOUNT', 10))->create();
         $this->command->info('Пользователи загружены');
     }
 }
