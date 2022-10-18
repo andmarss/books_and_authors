@@ -95,4 +95,12 @@ class Book extends Model
     {
         return $this->status === self::STATUS_CANCELLED;
     }
+
+    /**
+     * @return \Database\Factories\BookFactory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\BookFactory::new();
+    }
 }
