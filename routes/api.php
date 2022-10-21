@@ -14,5 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('authors', \App\Http\Controllers\UserController::class);
-Route::resource('books', \App\Http\Controllers\BookController::class);
+Route::middleware('guest')->group(function () {
+    Route::post('authors', [\App\Http\Controllers\UserController::class, 'store'])->name('authors.store');
+    Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+    Route::post('author', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('author.login');
+    Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+});
+
+Route::middleware('auth:api')->group(function () {
+    Route::resource('authors', \App\Http\Controllers\UserController::class)->except('store');
+    Route::resource('books', \App\Http\Controllers\BookController::class);
+});
