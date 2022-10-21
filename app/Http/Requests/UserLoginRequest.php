@@ -4,14 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class UserLoginRequest extends FormRequest
 {
     /**
-     * @var bool
-     */
-    protected $stopOnFirstFailure = true;
-
-    /**
+     * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -20,16 +17,15 @@ class StoreUserRequest extends FormRequest
     }
 
     /**
+     * Get the validation rules that apply to the request.
+     *
      * @return array
      */
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'middle_name' => 'nullable',
-            'pseudonym' => 'required|unique:users,pseudonym|alpha_dash',
-            'password' => 'required|confirmed|min:6',
+            'pseudonym' => 'required|exists:users,pseudonym|alpha_dash',
+            'password' => 'required|min:6',
         ];
     }
 
@@ -39,13 +35,10 @@ class StoreUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required'  => 'Имя обязательно для заполнения',
-            'last_name.required'   => 'Фамилия обязательна для заполнения',
             'pseudonym.required'   => 'Псевдоним обязателен для заполнения',
-            'pseudonym.unique'     => 'Псевдоним должен быть уникальным',
+            'pseudonym.exists'     => 'Пользователь с таким псевдонимом не найден',
             'pseudonym.alpha_dash' => 'Псевдоним может содержать только буквы, цифры, дефис и подчеркивание',
             'password.required'    => 'Пароль обязателен для заполнения',
-            'password.confirmed'   => 'Пароли не совпадают',
             'password.min'         => 'Пароль должен быть не менее 6 символов',
         ];
     }

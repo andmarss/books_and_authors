@@ -13,10 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if ($this->command->confirm('Очистить базу данных перед заполнением?')) {
-            $this->command->call('migrate:fresh');
-            $this->command->warn('База данных очищена');
-        }
+        $this->command->call('migrate:fresh');
+        $this->command->warn('База данных очищена');
 
         $this->call([
             UserTableSeeder::class,

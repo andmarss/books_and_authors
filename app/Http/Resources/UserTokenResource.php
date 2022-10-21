@@ -3,14 +3,14 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
 /**
- * Class BookCategoryResource
+ * Class UserResourceClean
  *
- * @property Collection $books
+ * @property int $id
+ * @method createToken(string $name, array $abilities = ['*'])
  */
-class BookCategoryResource extends JsonResource
+class UserTokenResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,8 +20,9 @@ class BookCategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge((new BookCategoryCleanResource($this))->toArray($request), [
-            'books' => BookResource::collection($this->books)->toArray($request),
-        ]);
+        return [
+            'token' => $this->createToken('auth_token')->accessToken ?? '',
+            'id' => $this->id
+        ];
     }
 }

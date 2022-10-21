@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'middle_name' => $this->faker->middleName($gender),
             'pseudonym' => $pseudonym,
             'email_verified_at' => now(),
-            'password' => bcrypt('secret'),
+            'password' => 'secret',
             'remember_token' => Str::random(10),
         ];
     }

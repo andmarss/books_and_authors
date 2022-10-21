@@ -38,10 +38,13 @@ class BookFactory extends Factory
             throw new \Exception('Image not generated');
         }
 
+        $created_at = $this->faker->dateTimeBetween('-3 months', 'now');
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
+
         return [
-            'title'       => $this->faker->title,
-            'description' => $this->faker->text(100),
-            'text'        => $this->faker->text(rand(500, 1000)),
+            'title'       => $this->faker->words( rand(2,6), true ),
+            'description' => $this->faker->realText( rand(50, 100) ),
+            'text'        => $this->faker->realText( rand(500, 1000) ),
             'image'       => $image,
             'author_id'   => $author_id,
             'category_id' => $category->id,
@@ -49,7 +52,9 @@ class BookFactory extends Factory
                 Book::STATUS_IN_PROGRESS,
                 Book::STATUS_FINISHED,
                 Book::STATUS_CANCELLED
-            ])
+            ]),
+            'created_at'  => $created_at,
+            'updated_at'  => $updated_at
         ];
     }
 }
