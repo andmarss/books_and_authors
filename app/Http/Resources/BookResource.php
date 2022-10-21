@@ -16,6 +16,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $image
  * @property string $status
  * @property string $updated_at
+ * @property int $category_id
+ * @property int $author_id
  *
  * @property bool $is_in_progress
  * @property bool $is_finished
@@ -35,18 +37,21 @@ class BookResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'description' => $this->description,
-            'text'        =>  $this->text,
-            'image'       => $this->image,
-            'status'      => $this->status,
-            'updated_at'  => $this->updated_at,
+            'id'             => $this->id,
+            'title'          => $this->title,
+            'description'    => $this->description,
+            'text'           =>  $this->text,
+            'image'          => $this->image,
+            'status'         => $this->status,
+            'created_at'     => $this->created_at,
+            'updated_at'     => $this->updated_at,
             'is_in_progress' => $this->is_in_progress,
             'is_finished'    => $this->is_finished,
             'is_cancelled'   => $this->is_cancelled,
-            'category'    => new \App\Http\Resources\BookCategoryResource($this->category),
-            'author' => new \App\Http\Resources\UserResourceClean($this->author)
+            'category_id'    => $this->category_id,
+            'author_id'      => $this->author_id,
+            'category'       => (new \App\Http\Resources\BookCategoryCleanResource($this->category))->toArray($request),
+            'author'         => (new \App\Http\Resources\UserResourceClean($this->author))->toArray($request),
         ];
     }
 }
