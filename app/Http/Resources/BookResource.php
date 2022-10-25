@@ -22,6 +22,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property bool $is_in_progress
  * @property bool $is_finished
  * @property bool $is_cancelled
+ * @property string $status_title
  *
  * @property BookCategoryResource $category
  * @property User $author
@@ -43,6 +44,7 @@ class BookResource extends JsonResource
             'text'           =>  $this->text,
             'image'          => $this->image,
             'status'         => $this->status,
+            'status_title'   => $this->status_title,
             'created_at'     => $this->created_at,
             'updated_at'     => $this->updated_at,
             'is_in_progress' => $this->is_in_progress,
