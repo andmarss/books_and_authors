@@ -53,9 +53,22 @@ class BookTableSeeder extends Seeder
 
         /** @var User $user */
         foreach (User::query()->cursor() as $user) {
-            Book::factory()->count(rand(env('BOOK_SEEDER_AMOUNT_MIN', 1), env('BOOK_SEEDER_AMOUNT_MAX', 5)))->create([
-                'author_id' => $user->id,
-            ]);
+            Book::factory()
+                 ->count(rand(env('BOOK_SEEDER_AMOUNT_MIN', 1), env('BOOK_SEEDER_AMOUNT_MAX', 5)))
+                 ->afterCreating(function ($books) use (&$user) {
+                     if ($books instanceof Book) {
+                         $books = [$books];
+                     } elseif ($books instanceof Collection) {
+                         $books = $books->all();
+                     }
+
+                     /** @var Book $book */
+                     foreach ($books as $book) {
+                         $book->updateQuietly([
+                             'image' => preg_replace('/\covers\/\d+\//', sprintf("/covers/%s/", $user->id), $book->image)
+                         ]);
+                     }
+                 })->create(['author_id' => $user->id]);
         }
 
         $this->command->info('Книги загружены');

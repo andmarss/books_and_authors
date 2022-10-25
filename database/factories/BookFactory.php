@@ -45,7 +45,7 @@ class BookFactory extends Factory
             'title'       => $this->faker->words( rand(2,6), true ),
             'description' => $this->faker->realText( rand(50, 100) ),
             'text'        => $this->faker->realText( rand(500, 1000) ),
-            'image'       => $image,
+            'image'       => sprintf('images/covers/%s/%s', $author_id, $image),
             'author_id'   => $author_id,
             'category_id' => $category->id,
             'status'      => $this->faker->randomElement([

@@ -26,12 +26,8 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var Collection $books */
-        $books = $this->books;
-
         return array_merge((new UserResourceClean($this))->toArray($request), [
-            'books' => BookResource::collection($books),
-            'books_count' => $books->count(),
+            'books' => BookResource::collection($this->books)->toArray($request)
         ]);
     }
 }

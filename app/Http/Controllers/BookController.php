@@ -24,7 +24,7 @@ class BookController extends Controller
          */
         $query = Book::query();
 
-        $query->when($request->has('title'), function ($query, $title) {
+        $query->when($request->input('title'), function ($query, $title) {
             $query->where('title', 'like', '%' . $title . '%');
         })->when($request->input('author_id'), function ($query, $author_id) {
             $query->where('author_id', $author_id);
@@ -34,15 +34,21 @@ class BookController extends Controller
             $query->where('status', $status);
         });
 
+        $total = $query->count();
+
+        $request->merge(['total' => $total]);
+
         /**
          * @var \Illuminate\Database\Eloquent\Collection $books
          */
         $books = $query->with(['author', 'category'])
             ->forPage($request->input('page', 1), $request->input('per_page', 10))
-            ->orderBy('updated_at', 'desc')
+            ->orderBy($request->input('order_by', 'updated_at'), $request->input('order', 'desc'))
             ->get();
 
-        return BookResource::collection($books)->response($request);
+        return BookResource::collection($books)
+            ->additional(['total' => $total])
+            ->response($request);
     }
 
     /**

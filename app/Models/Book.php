@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $is_in_progress
  * @property bool $is_finished
  * @property bool $is_cancelled
+ * @property string $status_title
  *
  * @property BelongsTo|BookCategory $category
  * @property BelongsTo|User $author
@@ -94,6 +95,22 @@ class Book extends Model
     public function getIsCancelledAttribute(): bool
     {
         return $this->status === self::STATUS_CANCELLED;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusTitleAttribute(): string
+    {
+        if ($this->is_cancelled) {
+            return 'Отменена';
+        } elseif ($this->is_finished) {
+            return 'Завершена';
+        } elseif ($this->is_in_progress) {
+            return 'В процессе';
+        }
+
+        return 'Неизвестно';
     }
 
     /**
