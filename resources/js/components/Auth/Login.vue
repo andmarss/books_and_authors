@@ -8,9 +8,9 @@
             <div class="-space-y-px rounded-md shadow-sm mt-6">
                 <div>
                     <label for="pseudonym" class="sr-only">Псевдоним</label>
-                    <p class="mt-2 text-sm text-red-600" id="email-error" v-html="pseudonymError" v-if="pseudonymError"></p>
+                    <p class="mt-2 text-sm text-red-600" id="pseudonym-error" v-html="pseudonymError" v-if="pseudonymError"></p>
                     <div class="mt-1 relative rounded-md shadow-sm">
-                        <input id="pseudonym" v-model="pseudonym" name="email" type="email" autocomplete="email" required class="relative block w-full px-3 py-2 appearance-none rounded-none rounded-t-md border  sm:text-sm" :class="pseudonymError ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500' : 'border-gray-300 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'" placeholder="Псевдоним">
+                        <input id="pseudonym" v-model="pseudonym" type="text" required class="relative block w-full px-3 py-2 appearance-none rounded-none rounded-t-md border  sm:text-sm" :class="pseudonymError ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500' : 'border-gray-300 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'" placeholder="Псевдоним">
                         <div v-if="pseudonymError" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <!-- Heroicon name: solid/exclamation-circle -->
                             <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -79,7 +79,7 @@ export default {
             .then(({data}) => {
                 if (data.data?.token) {
                     localStorage.setItem('token', data.data.token);
-                    this.$router.push({name: 'authors.index'});
+                    window.location = '/';
                 } else {
                     this.defaultError = 'Токен не был получен';
                 }

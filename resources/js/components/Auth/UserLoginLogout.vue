@@ -5,9 +5,9 @@
                 Войти
             </a>
 
-            <router-link exact tag="h3" :to="{name: 'register'}" class="cursor-pointer ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+            <a :href="route('register.form')" class="cursor-pointer ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                 Зарегистрироваться
-            </router-link>
+            </a>
         </div>
         <simple-dropdown v-if="user">
             <template v-slot:user>
@@ -46,7 +46,7 @@ export default {
                 }
             }).then(() => {
                 this.$store.dispatch('updateUser', null);
-                this.$router.push({name: 'authors.index'});
+                window.location.reload();
             }).catch(error => {
                 console.log(error);
             });

@@ -19,7 +19,7 @@
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
 <div id="app">
-    <div v-cloak class="flex min-h-screen w-full">
+    <div v-cloak class="flex min-h-full w-full">
         <!-- Content -->
         <div class="content w-full">
             <div class="items-center relative shadow h-header bg-white z-20 px-view">
@@ -28,8 +28,8 @@
                         <div class="relative bg-white">
                             <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
                                 <div class="flex justify-start lg:w-0 lg:flex-1">
-                                    <router-link exact tag="a" :to="{ name: 'authors.index'}" class="group cursor-pointer">
-                                        <span class="sr-only">Workflow</span>
+                                    <router-link exact tag="a" :to="{ name: 'home'}" class="group cursor-pointer">
+                                        <span class="sr-only">Self Publishers</span>
                                         <img class="h-8 w-auto sm:h-10" src="{{asset('logo/self-pub-logo.png')}}" alt="">
                                     </router-link>
                                 </div>
@@ -43,11 +43,11 @@
                                     </button>
                                 </div>
                                 <nav class="hidden md:flex space-x-10">
-                                    <router-link exact tag="h3" :to="{name: 'authors.index'}" class="cursor-pointer text-base font-medium text-gray-500 hover:text-gray-900">
+                                    <router-link exact tag="h3" :to="{path: '/authors'}" class="cursor-pointer text-base font-medium text-gray-500 hover:text-gray-900">
                                         Авторы
                                     </router-link>
 
-                                    <router-link exact tag="h3" :to="{name: 'genres.index'}" class="cursor-pointer text-base font-medium text-gray-500 hover:text-gray-900">
+                                    <router-link exact tag="h3" :to="{path: '/genres'}" class="cursor-pointer text-base font-medium text-gray-500 hover:text-gray-900">
                                         Жанры
                                     </router-link>
                                 </nav>
