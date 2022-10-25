@@ -22,7 +22,7 @@ class UserController extends Controller
          */
         $query = User::query();
 
-        $query->when($request->has('name'), function (\Illuminate\Database\Eloquent\Builder $query, $name) {
+        $query->when($request->input('name'), function (\Illuminate\Database\Eloquent\Builder $query, $name) {
             $query->where('first_name', 'like', '%' . $name . '%')
                 ->orWhere('last_name', 'like', '%' . $name . '%')
                 ->orWhere('middle_name', 'like', '%' . $name . '%')

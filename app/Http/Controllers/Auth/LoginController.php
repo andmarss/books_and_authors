@@ -8,6 +8,9 @@ use App\Http\Resources\UserTokenResource;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Laravel\Passport\RefreshToken;
+use Laravel\Passport\Token;
 
 class LoginController extends Controller
 {
@@ -48,6 +51,25 @@ class LoginController extends Controller
             $user = auth()->user();
 
             return (new UserTokenResource($user))->response($request);
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user) {
+            $token_ids = $user->tokens->pluck('id');
+            Token::query()->whereIn('id', $token_ids)->update(['revoked' => true]);
+            RefreshToken::query()->whereIn('access_token_id', $token_ids)->update(['revoked' => true]);
+
+            return response()->json(['message' => 'Logged out'], 200);
         }
 
         return response()->json(['message' => 'Unauthorized'], 401);
