@@ -16,6 +16,7 @@ use Laravel\Passport\HasApiTokens;
  * @property string|null $middle_name
  * @property string $pseudonym
  * @property string $password
+ * @property string $full_name
  *
  * @property Collection|HasMany $books
  */
@@ -58,6 +59,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
     /**
      * @param string $value
      * @return void
@@ -81,5 +86,10 @@ class User extends Authenticatable
     protected static function newFactory()
     {
         return \Database\Factories\UserFactory::new();
+    }
+    /** @return string */
+    public function getFullNameAttribute(): string
+    {
+        return sprintf("%s %s %s", $this->last_name, $this->first_name, $this->middle_name);
     }
 }
