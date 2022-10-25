@@ -25,11 +25,11 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'middle_name' => 'nullable',
             'pseudonym' => 'required|unique:users,pseudonym|alpha_dash',
             'password' => 'required|confirmed|min:6',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'nullable'
         ];
     }
 
