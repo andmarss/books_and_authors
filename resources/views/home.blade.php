@@ -3,7 +3,7 @@
 @section('content')
 <div>
     <transition name="fade" mode="out-in">
-        <route-view></route-view>
+        <router-view></router-view>
     </transition>
 
     <portal-target name="modals" multiple></portal-target>
