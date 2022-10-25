@@ -1,10 +1,11 @@
 import MainCard from './components/Main/Index.vue';
 import Books from './components/Books/Main.vue';
 import Book from './components/Books/Show.vue';
+import Page404 from './components/404/Index';
 
 export default [
     {
-        name: 'authors.index',
+        name: 'home',
         path: '/',
         component: MainCard,
         meta: {title: 'Self Publishing'}
@@ -24,5 +25,10 @@ export default [
             };
         },
         component: Book
+    },
+    {
+        path: '*',
+        name: '404',
+        component: Page404
     }
 ];
